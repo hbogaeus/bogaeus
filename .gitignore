@@ -1,0 +1,26 @@
+# Created by https://www.gitignore.io/api/elixir,phoenix
+
+### Elixir ###
+/cover
+/deps
+/doc
+/.fetch
+erl_crash.dump
+*.ez
+*.beam
+
+### Elixir Patch ###
+### Phoenix ###
+# Phoenix: a web framework for Elixir
+_build/
+/db
+/*.ez
+/config/prod.secret.exs
+/rel
+
+
+# End of https://www.gitignore.io/api/elixir,phoenix
+
+.cache/
+priv/static/dist/
+assets/node_modules
