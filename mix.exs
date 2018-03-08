@@ -40,7 +40,8 @@ defmodule Bogaeus.Mixfile do
       {:cowboy, "~> 1.0"},
       {:httpoison, "~> 0.13"},
       {:poison, "~> 3.1"},
-      {:feeder_ex, "~> 1.1"}
+      {:feeder_ex, "~> 1.1"},
+      {:exactor, "~> 2.2", warn_missing: false}
     ]
   end
 end
