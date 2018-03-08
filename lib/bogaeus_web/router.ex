@@ -17,6 +17,7 @@ defmodule BogaeusWeb.Router do
     pipe_through :api
 
     post "/beats/search", BeatsController, :search
+    get "/mfp", MusicForProgrammingController, :all
   end
 
   scope "/", BogaeusWeb do
