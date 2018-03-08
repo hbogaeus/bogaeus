@@ -3,7 +3,7 @@ defmodule MusicForProgramming.RssReader do
   require Logger
 
   @rss_url "http://musicforprogramming.net/rss.php"
-  @update_timer 10_800 # 3 hours
+  @update_timer 10_800_000  # 3 hours
 
   defstart start_link do
     Logger.debug "Started RSS reader"
