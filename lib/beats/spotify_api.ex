@@ -1,11 +1,11 @@
 defmodule Beats.SpotifyApi do
     use GenServer
     require Logger
-    
+
     def init(_args) do
-      Logger.debug "Started GenServer."
+      Logger.debug "Started Spotify API"
       {:ok, nil}
-    end 
+    end
 
     def start_link do
       GenServer.start_link(__MODULE__, nil, name: __MODULE__)
@@ -112,7 +112,7 @@ defmodule Beats.SpotifyApi do
                   Poison.decode!(body)
                   |> Map.get("audio_features")
                   |> Enum.map(&(&1["tempo"]))
-                
+
                 {:ok, result}
             {:ok, %HTTPoison.Response{status_code: 400}} ->
                 {:error, "Not found."}
