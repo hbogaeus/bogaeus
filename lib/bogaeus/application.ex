@@ -12,6 +12,7 @@ defmodule Bogaeus.Application do
       supervisor(BogaeusWeb.Endpoint, []),
       # Start your own worker by calling: Bogaeus.Worker.start_link(arg1, arg2, arg3)
       worker(Beats.SpotifyApi, []),
+      worker(MusicForProgramming.RssReader, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
