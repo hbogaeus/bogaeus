@@ -6,12 +6,10 @@ import ReactDOM from 'react-dom';
 import Loadable from 'react-loadable';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-/*
 import Beats from "./beats/Beats";
 import MusicForProgramming from './musicforprogramming/MusicForProgramming';
-*/
 
-
+/*
 const Loading = () => (
   <h1>Loading...</h1>
 )
@@ -25,6 +23,7 @@ const MusicForProgramming = Loadable({
   loader: () => import("./musicforprogramming/MusicForProgramming"),
   loading: Loading
 });
+*/
 
 const App = () => ([
     <Link key={1} to="/beats">Beats!</Link>,
