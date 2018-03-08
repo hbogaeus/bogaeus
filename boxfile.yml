@@ -17,12 +17,18 @@ run.config:
 
     fs_watch: true
 
+    build_triggers: 
+      - assets/package.json
+      - assets/yarn.lock
+      - mix.exs
+      - mix.lock
+
     extra_steps:
-      - cd assets && npm install
+      - cd assets && yarn install
 
 deploy.config: 
     extra_steps:
-      - cd assets && npm run deploy
+      - cd assets && yarn run deploy
       - mix phx.digest
 
 web.main:

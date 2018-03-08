@@ -7,9 +7,12 @@
     "watch": "parcel watch js/index.js --out-dir ../priv/static/js"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "lodash": "^4.17.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-loadable": "^5.3.1",
+    "react-player-controls": "^0.5.18",
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
