@@ -10,7 +10,7 @@ defmodule MusicForProgramming do
   def all_entries do
     case MusicForProgramming.RssReader.get do
       %FeederEx.Feed{} = feed ->
-        {:ok, Enum.reduce(feed.entries, [], fn item, acc -> [%{title: item.title, url: item.id, link: item.link} | acc] end)}
+        {:ok, Enum.reduce(feed.entries, [], fn item, acc -> [%{title: item.title, url: item.id, link: item.link, published: item.updated} | acc] end)}
       error -> {:error, error}
     end
   end

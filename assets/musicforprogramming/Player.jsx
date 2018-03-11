@@ -1,60 +1,86 @@
 import React, { Component } from "react";
 import { TimeMarker, TimeMarkerType } from "react-player-controls";
+import { Howl, Howler } from "howler";
 import throttle from "lodash/throttle";
 
 class Player extends Component {
   constructor(props) {
     super(props);
 
-    this.audioIsReady = this.audioIsReady.bind(this);
-    this.handleTimeUpdate = this.handleTimeUpdate.bind(this);
-
-    const audio = new Audio(props.url);
-    audio.addEventListener('canplay', this.audioIsReady);
-    audio.addEventListener('timeupdate', throttle(this.handleTimeUpdate, 1000));
-
-    audio.autoplay = true;
-
     this.state = {
-      enabled: false,
-      audio
+      playing: false
+    }
+
+    this.handlePlayPause = this.handlePlayPause.bind(this);
+    this.handleOnLoad = this.handleOnLoad.bind(this);
+    this.renderPos = this.renderPos.bind(this);
+    this.handleOnPlay = this.handleOnPlay.bind(this);
+
+    this.howler = new Howl({
+      src: props.url,
+      html5: true,
+      onload: this.handleOnLoad,
+      onplay: this.handleOnPlay
+    });
+  }
+
+  handleOnPlay() {
+    this.setState({
+      playing: true
+    })
+    this.renderPos()
+  }
+
+  handlePlayPause() {
+    if (this.state.playing) {
+      this.howler.pause();
+      this.setState({
+        playing: false
+      })
+    } else {
+      this.howler.play();
+      this.setState({
+        playing: true
+      });
     }
   }
 
-  handleTimeUpdate(event) {
-    const { audio } = this.state;
-    console.dir(event);
-
+  handleOnLoad() {
     this.setState({
-      currentTime: Math.floor(audio.currentTime)
+      duration: this.howler.duration()
     })
   }
 
-  audioIsReady(event) {
-    console.log("Ready!");
-    console.dir(event.target);
-    const { duration, currentTime } = event.target;
+  renderPos() {
     this.setState({
-      duration,
-      currentTime
+      current: this.howler.seek()
     })
+    if (this.state.playing) {
+      this._raf = requestAnimationFrame(this.renderPos);
+    }
+  }
+
+  componentWillUnmount() {
+    cancelAnimationFrame(this._raf);
+    this.howler.off();
+    this.howler.stop();
+    this.howler.unload();
+    this.howler = null;
   }
 
   render() {
-    const { duration, currentTime } = this.state;
-
+    const { current, duration } = this.state;
     return (
       <div>
+        <button onClick={this.handlePlayPause}>Play</button>
         <TimeMarker 
-        totalTime={duration}
-        currentTime={currentTime}
+        currentTime={current ? current : 0}
+        totalTime={duration ? duration : 0}
         markerSeparator=" / "
         firstMarkerType={TimeMarkerType.ELAPSED} 
         secondMarkerType={TimeMarkerType.DURATION} 
         />
-
       </div>
-
     )
   }
 }
