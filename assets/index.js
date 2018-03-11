@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import Loadable from 'react-loadable';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
+import Header from "./common/Header";
 import Beats from "./beats/Beats";
 import MusicForProgramming from './musicforprogramming/MusicForProgramming';
 
@@ -25,12 +26,13 @@ const MusicForProgramming = Loadable({
 });
 */
 
-const App = () => ([
-    <Link key={1} to="/beats">Beats!</Link>,
-    <Link key={2} to="/musicforprogramming">Mfp</Link>,
-    <Route key={3} path='/beats' component={Beats} />,
-    <Route key={4} path='/musicforprogramming' component={MusicForProgramming} />,
-]);
+const App = () => (
+  <div>
+    <Header />
+    <Route key={3} path='/beats' component={Beats} />
+    <Route key={4} path='/musicforprogramming' component={MusicForProgramming} />
+  </div>
+);
 
 ReactDOM.render((
   <Router>
