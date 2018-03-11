@@ -1,9 +1,44 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
   background: tomato;
+  color: papayawhip;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 70px;
+}
+
+.header-item {
+  margin-left: 2rem;
+  text-decoration: none;
+  color: papayawhip;
+}
+
+.mfp {
+  display: grid;
+  grid-template-columns: 1fr 150px 600px 150px 1fr;
+  grid-template-rows: 120px 900px;
+}
+
+.player {
+  grid-column: 3 / 4;
+}
+
+.ProgressBar {
+  width: 100%;
+  height: 30px;
+}
+
+.tracks {
+  grid-column: 2 / 5;
 }
 
 .track {
   display: block;
+  cursor: pointer;
 }

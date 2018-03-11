@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { TimeMarker, TimeMarkerType } from "react-player-controls";
+import {
+  PlayButton,
+  ProgressBar,
+  TimeMarker,
+  TimeMarkerType
+} from "react-player-controls";
 import { Howl, Howler } from "howler";
 import throttle from "lodash/throttle";
 
@@ -8,27 +13,30 @@ class Player extends Component {
     super(props);
 
     this.state = {
-      playing: false
-    }
+      playing: false,
+      loaded: false,
+      url: null
+    };
 
     this.handlePlayPause = this.handlePlayPause.bind(this);
     this.handleOnLoad = this.handleOnLoad.bind(this);
     this.renderPos = this.renderPos.bind(this);
     this.handleOnPlay = this.handleOnPlay.bind(this);
+    this.initalizeHowl = this.initalizeHowl.bind(this);
+    this.destroyHowler = this.destroyHowler.bind(this);
+  }
 
-    this.howler = new Howl({
-      src: props.url,
-      html5: true,
-      onload: this.handleOnLoad,
-      onplay: this.handleOnPlay
-    });
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.track != this.props.track) {
+      this.initalizeHowl(nextProps.track.url);
+    }
   }
 
   handleOnPlay() {
     this.setState({
       playing: true
-    })
-    this.renderPos()
+    });
+    this.renderPos();
   }
 
   handlePlayPause() {
@@ -36,7 +44,7 @@ class Player extends Component {
       this.howler.pause();
       this.setState({
         playing: false
-      })
+      });
     } else {
       this.howler.play();
       this.setState({
@@ -47,20 +55,32 @@ class Player extends Component {
 
   handleOnLoad() {
     this.setState({
+      loaded: true,
       duration: this.howler.duration()
-    })
+    });
   }
 
   renderPos() {
     this.setState({
       current: this.howler.seek()
-    })
+    });
     if (this.state.playing) {
       this._raf = requestAnimationFrame(this.renderPos);
     }
   }
 
-  componentWillUnmount() {
+  initalizeHowl(url) {
+    if (this.howler) this.destroyHowler();
+
+    this.howler = new Howl({
+      src: url,
+      html5: true,
+      onload: this.handleOnLoad,
+      onplay: this.handleOnPlay
+    });
+  }
+
+  destroyHowler() {
     cancelAnimationFrame(this._raf);
     this.howler.off();
     this.howler.stop();
@@ -68,20 +88,47 @@ class Player extends Component {
     this.howler = null;
   }
 
+  spacebarHandler(e) {
+    e.preventDefault();
+    if (event.key == " " || event.key == "Spacebar") {
+      this.handlePlayPause();
+    }
+  }
+
+  componentWillMount() {
+    document.addEventListener("keydown", this.spacebarHandler);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.spacebarHandler);
+    if (this.howler) {
+      this.destroyHowler();
+    }
+  }
+
   render() {
-    const { current, duration } = this.state;
+    const { loaded, current, duration } = this.state;
+    const { track } = this.props;
     return (
-      <div>
-        <button onClick={this.handlePlayPause}>Play</button>
-        <TimeMarker 
-        currentTime={current ? current : 0}
-        totalTime={duration ? duration : 0}
-        markerSeparator=" / "
-        firstMarkerType={TimeMarkerType.ELAPSED} 
-        secondMarkerType={TimeMarkerType.DURATION} 
+      <div className="player">
+        <PlayButton isEnabled={loaded} onClick={this.handlePlayPause}>
+          Play
+        </PlayButton>
+        <span>{track ? track.title : ""}</span>
+        <ProgressBar
+          currentTime={current ? current : 0}
+          totalTime={duration ? duration : 0}
+          isSeekable={loaded}
+        />
+        <TimeMarker
+          currentTime={current ? current : 0}
+          totalTime={duration ? duration : 0}
+          markerSeparator=" / "
+          firstMarkerType={TimeMarkerType.ELAPSED}
+          secondMarkerType={TimeMarkerType.DURATION}
         />
       </div>
-    )
+    );
   }
 }
 

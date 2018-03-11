@@ -3,11 +3,11 @@ import Player from "./Player";
 
 class MusicForProgramming extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       tracks: [],
-      selectedURL: ""
-    }
+      selectedTrack: null
+    };
 
     this.handleClick = this.handleClick.bind(this);
   }
@@ -15,19 +15,20 @@ class MusicForProgramming extends Component {
   componentWillMount() {
     this.getFeed()
       .then(response => response.json())
-      .then(json => this.setState({
-        tracks: json.data
-      })
-    );
+      .then(json =>
+        this.setState({
+          tracks: json.data
+        })
+      );
   }
 
   getFeed() {
     return fetch("/api/mfp");
   }
 
-  handleClick(audioURL) {
+  handleClick(track) {
     this.setState({
-      selectedURL: audioURL
+      selectedTrack: track
     });
   }
 
@@ -39,27 +40,32 @@ class MusicForProgramming extends Component {
     return publishedDate > current;
   }
 
-
   render() {
-    const { tracks, selectedURL } = this.state;
+    const { tracks, selectedTrack } = this.state;
 
     return (
-      <div>
-        {selectedURL ? <Player url={selectedURL}></Player> : <span>Click to play track</span>}
-        {tracks.map((track) => (
-          <Track
-            key={track.title}
-            title={track.title}
-            url={track.url}
-            fresh={MusicForProgramming.isFresh(track.published)}
-            onClick={() => this.handleClick(track.url)}
+      <div className="mfp">
+        <Player track={selectedTrack} />
+        <div className="tracks">
+          {tracks.map(track => (
+            <Track
+              key={track.title}
+              title={track.title}
+              url={track.url}
+              fresh={MusicForProgramming.isFresh(track.published)}
+              onClick={() => this.handleClick(track)}
             />
-        ))}
+          ))}
+        </div>
       </div>
-    )
+    );
   }
 }
 
-const Track = ({ title, url, onClick, fresh }) => <span className="track" onClick={onClick}>{title} {fresh && "FRESH!"}</span>
+const Track = ({ title, url, onClick, fresh }) => (
+  <span className="track" onClick={onClick}>
+    {title} {fresh && "FRESH!"}
+  </span>
+);
 
 export default MusicForProgramming;
