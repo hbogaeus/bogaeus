@@ -1,0 +1,18 @@
+.main {
+  display: grid;
+  grid-template-columns: 1fr 150px 600px 150px 1fr;
+  grid-template-rows: 120px 900px;
+}
+
+.player {
+  grid-column: 3 / 4;
+}
+
+.tracks {
+  grid-column: 2 / 5;
+}
+
+.track {
+  display: block;
+  cursor: pointer;
+}

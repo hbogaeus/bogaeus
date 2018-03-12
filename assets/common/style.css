@@ -1,0 +1,11 @@
+.header {
+  display: flex;
+  align-items: center;
+  height: 70px;
+}
+
+.headerItem {
+  margin-left: 2rem;
+  text-decoration: none;
+  color: papayawhip;
+}

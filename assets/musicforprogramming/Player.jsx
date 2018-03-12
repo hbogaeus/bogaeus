@@ -6,7 +6,7 @@ import {
   TimeMarkerType
 } from "react-player-controls";
 import { Howl, Howler } from "howler";
-import throttle from "lodash/throttle";
+import style from "./style.css";
 
 class Player extends Component {
   constructor(props) {
@@ -109,13 +109,22 @@ class Player extends Component {
   render() {
     const { loaded, current, duration } = this.state;
     const { track } = this.props;
+
+    const classes = {
+      elapsed: "ASDADS",
+      intent: "babo",
+      handle: "handloooo"
+    };
+
     return (
-      <div className="player">
+      <div className={style.player}>
         <PlayButton isEnabled={loaded} onClick={this.handlePlayPause}>
           Play
         </PlayButton>
         <span>{track ? track.title : ""}</span>
         <ProgressBar
+          className="HELLO WORLD"
+          childClasses={classes}
           currentTime={current ? current : 0}
           totalTime={duration ? duration : 0}
           isSeekable={loaded}

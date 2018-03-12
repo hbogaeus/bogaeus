@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Player from "./Player";
+import style from "./style";
 
 class MusicForProgramming extends Component {
   constructor() {
@@ -44,9 +45,9 @@ class MusicForProgramming extends Component {
     const { tracks, selectedTrack } = this.state;
 
     return (
-      <div className="mfp">
+      <div className={style.main}>
         <Player track={selectedTrack} />
-        <div className="tracks">
+        <div className={style.tracks}>
           {tracks.map(track => (
             <Track
               key={track.title}
@@ -63,7 +64,7 @@ class MusicForProgramming extends Component {
 }
 
 const Track = ({ title, url, onClick, fresh }) => (
-  <span className="track" onClick={onClick}>
+  <span className={style.track} onClick={onClick}>
     {title} {fresh && "FRESH!"}
   </span>
 );

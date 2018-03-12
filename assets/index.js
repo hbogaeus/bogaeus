@@ -8,10 +8,12 @@ import Loadable from "react-loadable";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Header from "./common/Header";
-import Beats from "./beats/Beats";
-import MusicForProgramming from "./musicforprogramming/MusicForProgramming";
 
 /*
+import Beats from "./beats/Beats";
+import MusicForProgramming from "./musicforprogramming/MusicForProgramming";
+*/
+
 const Loading = () => <h1>Loading...</h1>;
 
 const Beats = Loadable({
@@ -23,7 +25,6 @@ const MusicForProgramming = Loadable({
   loader: () => import("./musicforprogramming/MusicForProgramming"),
   loading: Loading
 });
-*/
 
 const App = () => (
   <div>
