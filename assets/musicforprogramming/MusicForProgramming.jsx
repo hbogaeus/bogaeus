@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Player from "./Player";
 import style from "./style";
+import withThemeChange from "../common/withThemeChange";
 
 class MusicForProgramming extends Component {
   constructor() {
@@ -69,4 +70,4 @@ const Track = ({ title, url, onClick, fresh }) => (
   </span>
 );
 
-export default MusicForProgramming;
+export default withThemeChange(MusicForProgramming, "mfp");
