@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "scripts": {
-    "watch": "parcel watch js/index.js --out-dir ../priv/static/js"
-  },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "howler": "^2.0.9",
@@ -16,8 +13,18 @@
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "prettier": "^1.11.1"
+    "css-loader": "^0.28.10",
+    "prettier": "^1.11.1",
+    "react-hot-loader": "^4.0.0",
+    "style-loader": "^0.20.3",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.11",
+    "webpack-dev-server": "^3.1.1",
+    "webpack-serve": "^0.2.0"
   }
 }

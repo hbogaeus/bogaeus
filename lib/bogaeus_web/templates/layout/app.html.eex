@@ -8,11 +8,12 @@
     <meta name="author" content="Henry Bogaeus">
 
     <title>Bogaeus</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/dist/index.css") %>">
+    <!-- <link rel="stylesheet" href="<%= static_path(@conn, "/dist/index.css") %>">-->
   </head>
 
   <body>
     <div id="root"></div>
-    <script src="<%= static_path(@conn, "/dist/index.js") %>"></script>
+    <!-- <script src="<%= static_path(@conn, "/dist/bundle.js") %>"></script>-->
+    <script  src='http://localhost:3000/bundle.js'></script>
   </body>
 </html>

@@ -11,7 +11,10 @@ config :bogaeus, BogaeusWeb.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: [node: ["assets/node_modules/.bin/parcel", "watch", "assets/index.js", "--out-dir", "priv/static/dist", "--out-file", "index"]]
+  watchers: [
+    node: ["assets/node_modules/.bin/webpack-serve", "./assets/webpack.dev.config.js"]
+    # node: ["assets/node_modules/.bin/webpack-dev-server", "--hot", "--config", "./assets/webpack.dev.config.js", "--stdin"]
+  ]
 
 # ## SSL Support
 #

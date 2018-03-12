@@ -25,3 +25,4 @@ _build/
 priv/static/dist/
 assets/node_modules
 .elixir_ls
+yarn-error.log

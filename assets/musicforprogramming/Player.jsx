@@ -89,8 +89,8 @@ class Player extends Component {
   }
 
   spacebarHandler(e) {
-    e.preventDefault();
     if (event.key == " " || event.key == "Spacebar") {
+      e.preventDefault();
       this.handlePlayPause();
     }
   }
