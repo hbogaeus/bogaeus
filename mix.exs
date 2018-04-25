@@ -42,7 +42,8 @@ defmodule Bogaeus.Mixfile do
       {:poison, "~> 3.1"},
       {:feeder_ex, "~> 1.1"},
       {:exactor, "~> 2.2", warn_missing: false},
-      {:confex, "~> 3.3"}
+      {:confex, "~> 3.3"},
+      {:timex, "~> 3.2"}
     ]
   end
 end

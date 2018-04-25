@@ -33,7 +33,7 @@ defmodule Beats.SpotifyApi do
     Base.encode64("#{client_id}:#{client_secret}")
   end
 
-  defp get_access_token do
+  defp get_client_credentials_token do
     token = GenServer.call(__MODULE__, :get)
 
     if token do
@@ -50,16 +50,8 @@ defmodule Beats.SpotifyApi do
     end
   end
 
-  defp request_access_token do
-    url = "https://accounts.spotify.com/api/token"
-    body = {:form, [grant_type: "client_credentials"]}
-
-    headers = %{
-      "Content-Type" => "application/x-www-form-urlencoded",
-      "Authorization" => "Basic #{encoded_id_and_secret()}"
-    }
-
-    case HTTPoison.post(url, body, headers) do
+  defp request(method, url, headers, body \\ "") do
+    case HTTPoison.request(method, url, body, headers) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         body = Poison.decode!(body)
         {:ok, body}
@@ -75,8 +67,49 @@ defmodule Beats.SpotifyApi do
     end
   end
 
+  defp request_access_token do
+    url = "https://accounts.spotify.com/api/token"
+    body = {:form, [grant_type: "client_credentials"]}
+
+    headers = %{
+      "Content-Type" => "application/x-www-form-urlencoded",
+      "Authorization" => "Basic #{encoded_id_and_secret()}"
+    }
+
+    request(:post, url, headers, body)
+  end
+
+  def request_oauth_token(auth_code, redirect_uri) do
+    url = "https://accounts.spotify.com/api/token"
+
+    body =
+      {:form,
+       [
+         grant_type: "authorization_code",
+         code: auth_code,
+         redirect_uri: redirect_uri
+       ]}
+
+    headers = %{
+      "Content-Type" => "application/x-www-form-urlencoded",
+      "Authorization" => "Basic #{encoded_id_and_secret()}"
+    }
+
+    request(:post, url, headers, body)
+  end
+
+  def get_playlists(access_token) do
+    url = "https://api.spotify.com/v1/me/playlists"
+
+    headers = %{
+      "Authorization" => "Bearer #{access_token}"
+    }
+
+    request(:get, url, headers)
+  end
+
   def search(query) do
-    {:ok, token} = get_access_token()
+    {:ok, token} = get_client_credentials_token()
 
     headers = %{
       "Authorization" => "Bearer #{token}"
@@ -109,7 +142,7 @@ defmodule Beats.SpotifyApi do
   end
 
   def bpms(ids) do
-    {:ok, token} = get_access_token()
+    {:ok, token} = get_client_credentials_token()
 
     headers = %{
       "Authorization" => "Bearer #{token}"

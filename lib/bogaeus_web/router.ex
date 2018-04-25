@@ -10,6 +10,7 @@ defmodule BogaeusWeb.Router do
   end
 
   pipeline :api do
+    plug :fetch_session
     plug :accepts, ["json"]
   end
 
@@ -17,11 +18,17 @@ defmodule BogaeusWeb.Router do
     pipe_through :api
 
     post "/beats/search", BeatsController, :search
+    get "/beats/playlists", BeatsController, :playlists
+
     get "/mfp", MusicForProgrammingController, :all
   end
 
   scope "/", BogaeusWeb do
-    pipe_through :browser # Use the default browser stack
+    # Use the default browser stack
+    pipe_through :browser
+
+    get "/beats/authorize", BeatsController, :authorize
+    get "/beats/callback", BeatsController, :callback
 
     get "/*path", PageController, :index
   end

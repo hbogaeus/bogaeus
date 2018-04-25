@@ -15,6 +15,7 @@ class Beats extends Component {
     this.handleSearchClick = this.handleSearchClick.bind(this);
     this.handleEnterClick = this.handleEnterClick.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.handlePlaylistClick = this.handlePlaylistClick.bind(this);
   }
 
   handleInput(event) {
@@ -63,6 +64,26 @@ class Beats extends Component {
     });
   }
 
+  playlists() {
+    return fetch("/api/beats/playlists", {
+      method: "GET",
+      headers: new Headers({
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }),
+      credentials: 'include'
+    });
+  }
+
+  handlePlaylistClick() {
+    this.playlists()
+      .then(response => response.json())
+      .then(json =>
+        console.log(json)
+      );
+  }
+
+
   render() {
     const { searchText, items, isValid, isLoading } = this.state;
 
@@ -92,6 +113,8 @@ class Beats extends Component {
                 Search
               </a>
             </div>
+            <a href="/beats/authorize">Login</a>
+            <a onClick={this.handlePlaylistClick}>Playlists</a>
           </div>
 
           {!isLoading &&
