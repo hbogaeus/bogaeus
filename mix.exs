@@ -6,9 +6,9 @@ defmodule Bogaeus.Mixfile do
       app: :bogaeus,
       version: "0.0.1",
       elixir: "~> 1.4",
-      elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers,
-      start_permanent: Mix.env == :prod,
+      elixirc_paths: elixirc_paths(Mix.env()),
+      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
   end
@@ -25,7 +25,7 @@ defmodule Bogaeus.Mixfile do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_),     do: ["lib"]
+  defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
   #
@@ -41,7 +41,8 @@ defmodule Bogaeus.Mixfile do
       {:httpoison, "~> 0.13"},
       {:poison, "~> 3.1"},
       {:feeder_ex, "~> 1.1"},
-      {:exactor, "~> 2.2", warn_missing: false}
+      {:exactor, "~> 2.2", warn_missing: false},
+      {:confex, "~> 3.3"}
     ]
   end
 end
