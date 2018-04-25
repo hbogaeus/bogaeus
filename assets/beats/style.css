@@ -2,7 +2,7 @@
   height: 100%;
   padding: 10px;
   display: grid;
-  grid-template-columns: auto 100px 300px 100px auto;
+  grid-template-columns: auto 250px 300px 250px auto;
   grid-template-rows: 100px 2.5rem 2rem auto;
 }
 
@@ -60,12 +60,25 @@
 
 .card {
   display: flex;
+  margin-bottom: 1rem;
+  align-items: center;
 }
 
 .cardImage {
   height: 100%;
 }
 
-.cardContent {
-  margin-left: 1rem;
+.cardBPM {
+  margin-left: 10px;
+  font-size: 2.5rem;
+}
+
+.cardBPM::after {
+  content: " BPM";
+  font-size: 0.8rem;
+}
+
+.cardInfo {
+  font-size: 1rem;
+  margin-left: 10px;
 }

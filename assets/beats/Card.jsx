@@ -8,13 +8,8 @@ class Card extends PureComponent {
     return (
       <div className={style.card}>
         <img className={style.cardImage} src={image_url} />
-        <div className={style.cardContent}>
-          <p>
-            <span><strong>{title} - {artist}</strong></span>
-            <br />
-            <span className="is-size-5">{Math.round(bpm)} BPM</span>
-          </p>
-        </div>
+        <span className={style.cardBPM}>{Math.round(bpm)}</span>
+        <span className={style.cardInfo}>{title} - {artist}</span>
       </div>
     )
   }
