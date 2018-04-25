@@ -26,7 +26,7 @@ defmodule Beats do
             get_in(item, [
               "album",
               "images",
-              fn :get, data, _next -> Map.get(Enum.at(data, 1), "url") end
+              fn :get, data, _next -> Map.get(Enum.at(data, 2), "url") end
             ])
         }
       end)

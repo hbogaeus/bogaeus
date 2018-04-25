@@ -1,24 +1,21 @@
 import React, { PureComponent } from "react";
+import style from "./style.css";
 
 class Card extends PureComponent {
   render() {
     const { image_url, title, artist, bpm } = this.props;
 
     return (
-      <article className="media">
-        <figure className="media-left">
-          <p className="image is-128x128">
-            <img src={image_url} />
-          </p>
-        </figure>
-        <div className="media-content">
+      <div className={style.card}>
+        <img className={style.cardImage} src={image_url} />
+        <div className={style.cardContent}>
           <p>
             <span><strong>{title} - {artist}</strong></span>
             <br />
             <span className="is-size-5">{Math.round(bpm)} BPM</span>
-           </p>
+          </p>
         </div>
-      </article>
+      </div>
     )
   }
 }

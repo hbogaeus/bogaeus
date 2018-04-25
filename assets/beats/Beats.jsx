@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Card from "./Card.jsx";
 import withThemeChange from "../common/withThemeChange";
+import style from "./style.css";
 
 class Beats extends Component {
   constructor() {
@@ -88,35 +89,25 @@ class Beats extends Component {
     const { searchText, items, isValid, isLoading } = this.state;
 
     return (
-      <div className="section container main">
-        <div className="content has-text-centered">
-          <h1 className="title is-size-1">Beats</h1>
-          <div className="search section field has-addons ">
-            <div className="control">
-              <input
-                onChange={this.handleInput}
-                onKeyUp={this.handleEnterClick}
-                value={searchText}
-                className="input is-medium"
-                type="text"
-                placeholder="Title, artist, album..."
-              />
-            </div>
-            <div className="control">
-              <a
-                onClick={this.handleSearchClick}
-                type="submit"
-                className={`button is-primary is-medium ${isLoading &&
-                  "is-loading"}`}
-                tabIndex="0"
-              >
-                Search
-              </a>
-            </div>
-            <a href="/beats/authorize">Login</a>
-            <a onClick={this.handlePlaylistClick}>Playlists</a>
-          </div>
+      <div className={style.main}>
+        <h1 className={style.title}>Beats</h1>
+        <div className={`${style.search} ${isLoading && style.loading}`}>
+          <input
+            onChange={this.handleInput}
+            onKeyUp={this.handleEnterClick}
+            className={style.searchInput}
+            value={searchText}
+            type="text"
+            placeholder="Search for a title, artist, album..."
+          />
 
+        </div>
+        {/* 
+          <a href="/beats/authorize">Login to Spotify</a>
+          <a onClick={this.handlePlaylistClick}>Playlists</a>
+          */}
+
+        <div className={style.results}>
           {!isLoading &&
             isValid &&
             items.map(item => <Card key={item.id} {...item} />)}
