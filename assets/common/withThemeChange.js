@@ -4,7 +4,8 @@ import style from "../index.css";
 const withThemeChange = (WrappedComponent, theme) => {
   return class extends Component {
     componentWillMount() {
-      document.getElementsByTagName("body")[0].className = style[theme];
+      const body = document.getElementsByTagName("body")[0];
+      body.className = style[theme];
     }
 
     render() {

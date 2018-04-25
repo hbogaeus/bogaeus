@@ -66,7 +66,8 @@ class MusicForProgramming extends Component {
 
 const Track = ({ title, url, onClick, fresh }) => (
   <span className={style.track} onClick={onClick}>
-    {title} {fresh && "FRESH!"}
+    {title.substring(8, 10)} {title.substring(title.indexOf(": ") + 1)}{" "}
+    {fresh && "FRESH!"}
   </span>
 );
 

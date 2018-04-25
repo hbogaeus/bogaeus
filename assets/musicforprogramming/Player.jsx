@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import {
   PlayButton,
+  PauseButton,
   ProgressBar,
-  TimeMarker,
-  TimeMarkerType
+  FormattedTime,
+  VolumeSlider,
+  ControlDirection
 } from "react-player-controls";
 import { Howl, Howler } from "howler";
 import style from "./style.css";
@@ -15,15 +17,18 @@ class Player extends Component {
     this.state = {
       playing: false,
       loaded: false,
+      volume: 0.0,
       url: null
     };
 
+    this.handleVolume = this.handleVolume.bind(this);
     this.handlePlayPause = this.handlePlayPause.bind(this);
     this.handleOnLoad = this.handleOnLoad.bind(this);
     this.renderPos = this.renderPos.bind(this);
     this.handleOnPlay = this.handleOnPlay.bind(this);
     this.initalizeHowl = this.initalizeHowl.bind(this);
     this.destroyHowler = this.destroyHowler.bind(this);
+    this.spacebarHandler = this.spacebarHandler.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -56,8 +61,10 @@ class Player extends Component {
   handleOnLoad() {
     this.setState({
       loaded: true,
+      playing: false,
       duration: this.howler.duration()
     });
+    this.handlePlayPause();
   }
 
   renderPos() {
@@ -96,45 +103,69 @@ class Player extends Component {
   }
 
   componentWillMount() {
-    document.addEventListener("keydown", this.spacebarHandler);
+    //document.addEventListener("keydown", this.spacebarHandler);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("keydown", this.spacebarHandler);
+    // document.removeEventListener("keydown", this.spacebarHandler);
     if (this.howler) {
       this.destroyHowler();
     }
   }
 
-  render() {
-    const { loaded, current, duration } = this.state;
-    const { track } = this.props;
+  handleVolume(volume) {
+    console.log(volume);
+  }
 
-    const classes = {
-      elapsed: "ASDADS",
-      intent: "babo",
-      handle: "handloooo"
-    };
+  render() {
+    const { playing, loaded, current, duration } = this.state;
+    const { track } = this.props;
 
     return (
       <div className={style.player}>
-        <PlayButton isEnabled={loaded} onClick={this.handlePlayPause}>
-          Play
-        </PlayButton>
-        <span>{track ? track.title : ""}</span>
-        <ProgressBar
-          className="HELLO WORLD"
-          childClasses={classes}
-          currentTime={current ? current : 0}
-          totalTime={duration ? duration : 0}
-          isSeekable={loaded}
-        />
-        <TimeMarker
-          currentTime={current ? current : 0}
-          totalTime={duration ? duration : 0}
-          markerSeparator=" / "
-          firstMarkerType={TimeMarkerType.ELAPSED}
-          secondMarkerType={TimeMarkerType.DURATION}
+        {playing ? (
+          <PauseButton
+            className={style.playButton}
+            isEnabled={loaded}
+            onClick={this.handlePlayPause}
+          />
+        ) : (
+          <PlayButton
+            className={style.playButton}
+            isEnabled={loaded}
+            onClick={this.handlePlayPause}
+          />
+        )}
+        <span className={style.currentlyPlaying}>
+          {track ? track.title : "Music For Programming"}
+        </span>
+        <div className={style.progressBarWrapper}>
+          <FormattedTime numSeconds={current ? current : 0} />
+          <ProgressBar
+            className={style.bar}
+            childClasses={{
+              elapsed: style.elapsed,
+              intent: style.intent,
+              handle: style.handle,
+              seek: style.seek
+            }}
+            currentTime={current ? current : 0}
+            totalTime={duration ? duration : 0}
+            isSeekable={loaded}
+          />
+          <FormattedTime numSeconds={duration ? duration : 0} />
+        </div>
+        <VolumeSlider
+          className={style.bar}
+          childClasses={{
+            value: style.value,
+            intent: style.intent,
+            handle: style.handle
+          }}
+          isEnabled={true}
+          direction={ControlDirection.HORIZONTAL}
+          volume={this.state.volume}
+          onVolumeChange={this.handleVolume}
         />
       </div>
     );

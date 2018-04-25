@@ -8,6 +8,7 @@
     <meta name="author" content="Henry Bogaeus">
 
     <title>Bogaeus</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <!-- <link rel="stylesheet" href="<%= static_path(@conn, "/dist/index.css") %>">-->
   </head>
 

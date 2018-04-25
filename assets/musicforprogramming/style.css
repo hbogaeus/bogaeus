@@ -1,18 +1,111 @@
 .main {
-  display: grid;
-  grid-template-columns: 1fr 150px 600px 150px 1fr;
-  grid-template-rows: 120px 900px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  max-width: 900px;
 }
 
 .player {
-  grid-column: 3 / 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.playButton {
+  height: 3rem;
+  width: 3rem;
+  padding: 8px;
+  border-radius: 100%;
+  outline: none;
+  border: solid 2px #fabd2f;
+  background: transparent;
+  cursor: pointer;
+
+  & > svg {
+    fill: #fabd2f;
+  }
+}
+
+.currentlyPlaying {
+  margin-top: 10px;
+  min-height: 1rem;
+}
+
+.progressBarWrapper {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+}
+
+.bar {
+  min-width: 12rem;
+  position: relative;
+  flex-grow: 2;
+  height: 6px;
+  background-color: #eee;
+  border-radius: 4px;
+  margin: 1rem;
+
+  &:hover .handle {
+    transform: scale(1);
+  }
+
+  &:hover .intent {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+}
+
+.elapsed {
+  position: absolute;
+  height: 6px;
+  background: #fabd2f;
+  border-radius: 4px;
+}
+
+.value {
+  position: absolute;
+  height: 100%;
+}
+
+.intent {
+  position: absolute;
+  background: limegreen;
+  height: 6px;
+}
+
+.handle {
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  top: 0;
+  margin: -5px 0 0 -8px;
+  border-radius: 100%;
+  transform: scale(0);
+  transition: transform 0.2s;
+  background: #fabd2f;
+}
+
+.seek {
+  position: absolute;
+  cursor: pointer;
+  left: -6px;
+  top: 0;
+  right: -6px;
+  bottom: 0;
 }
 
 .tracks {
-  grid-column: 2 / 5;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 28rem;
 }
 
 .track {
   display: block;
   cursor: pointer;
+  line-height: 1.5;
 }
