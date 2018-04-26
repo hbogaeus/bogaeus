@@ -19,6 +19,7 @@ defmodule BogaeusWeb.Router do
 
     post "/beats/search", BeatsController, :search
     get "/beats/playlists", BeatsController, :playlists
+    post "/beats/playlist", BeatsController, :playlist
 
     get "/mfp", MusicForProgrammingController, :all
   end

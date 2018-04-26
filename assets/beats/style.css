@@ -19,6 +19,11 @@
   grid-row: 2 / 3;
 }
 
+.spotifyLogin {
+  grid-column: 4 / 5;
+  grid-row: 1 / 2;
+}
+
 @keyframes donut-spin {
   0% {
     transform: rotate(0deg);
@@ -81,4 +86,10 @@
 .cardInfo {
   font-size: 1rem;
   margin-left: 10px;
+}
+
+.playlistImage {
+  background-size: cover;
+  height: 3rem;
+  width: 3rem;
 }

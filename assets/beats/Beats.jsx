@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Card from "./Card.jsx";
+import Playlist from "./Playlist.jsx";
 import withThemeChange from "../common/withThemeChange";
 import style from "./style.css";
 
@@ -10,12 +11,15 @@ class Beats extends Component {
       searchText: "",
       isLoading: false,
       isValid: false,
-      items: []
+      items: [],
+      playlists: [],
+      selectedPlaylist: null
     };
 
     this.handleSearchClick = this.handleSearchClick.bind(this);
     this.handleEnterClick = this.handleEnterClick.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.handlePlaylistsClick = this.handlePlaylistsClick.bind(this);
     this.handlePlaylistClick = this.handlePlaylistClick.bind(this);
   }
 
@@ -61,6 +65,7 @@ class Beats extends Component {
         Accept: "application/json",
         "Content-Type": "application/json"
       }),
+      credentials: 'include',
       body: JSON.stringify({ query: query })
     });
   }
@@ -76,17 +81,38 @@ class Beats extends Component {
     });
   }
 
-  handlePlaylistClick() {
+  playlist(playlistId, userId) {
+    return fetch("/api/beats/playlist", {
+      method: "POST",
+      headers: new Headers({
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }),
+      credentials: 'include',
+      body: JSON.stringify({ playlistId: playlistId, userId: userId })
+    });
+  }
+
+  handlePlaylistsClick() {
     this.playlists()
+      .then(response => response.json())
+      .then(json =>
+        this.setState({
+          playlists: json.items
+        })
+      );
+  }
+
+  handlePlaylistClick(playlistId, userId) {
+    this.playlist(playlistId, userId)
       .then(response => response.json())
       .then(json =>
         console.log(json)
       );
   }
 
-
   render() {
-    const { searchText, items, isValid, isLoading } = this.state;
+    const { searchText, items, playlists, selectedPlaylist, isValid, isLoading } = this.state;
 
     return (
       <div className={style.main}>
@@ -102,10 +128,17 @@ class Beats extends Component {
           />
 
         </div>
-        {/* 
-          <a href="/beats/authorize">Login to Spotify</a>
-          <a onClick={this.handlePlaylistClick}>Playlists</a>
-          */}
+        {!window.APP.spotify_name ?
+          <span>{window.APP.spotify_name}</span>
+          : <a className={style.spotifyLogin} href="/beats/authorize">Login to Spotify</a>
+        }
+        <a onClick={this.handlePlaylistsClick}>Playlists</a>
+        <div>
+          {
+            playlists.map(playlist => <Playlist key={playlist.id} handlePlaylistClick={this.handlePlaylistClick} {...playlist} />)
+          }
+        </div>
+
 
         <div className={style.results}>
           {!isLoading &&

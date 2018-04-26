@@ -10,10 +10,22 @@ defmodule BogaeusWeb.BeatsController do
 
   def playlists(conn, _params) do
     access_token = get_session(conn, :access_token)
-    Logger.error("#{inspect access_token}")
 
     if access_token do
       data = Beats.playlists(access_token)
+      json(conn, data)
+    else
+      conn
+      |> put_status(:bad_request)
+      |> json(%{error: "Bad request"})
+    end
+  end
+
+  def playlist(conn, %{"playlistId" => playlist_id, "userId" => user_id}) do
+    access_token = get_session(conn, :access_token)
+
+    if access_token && user_id do
+      data = Beats.playlist_songs(access_token, user_id, playlist_id)
       json(conn, data)
     else
       conn
@@ -32,7 +44,7 @@ defmodule BogaeusWeb.BeatsController do
       response_type: "code",
       scope:
         "playlist-read-collaborative playlist-read-private streaming user-read-birthdate user-read-email user-read-private",
-      redirect_uri: "http://b72fa936.ngrok.io/beats/callback",
+      redirect_uri: "http://53c9e92c.ngrok.io/beats/callback",
       state: oauth_state
     }
 
@@ -45,18 +57,15 @@ defmodule BogaeusWeb.BeatsController do
   end
 
   def callback(conn, %{"code" => code, "state" => _state}) do
-    case Beats.SpotifyApi.request_oauth_token(code, "http://b72fa936.ngrok.io/beats/callback") do
-      {:ok,
-       %{
-         "access_token" => access_token,
-         "refresh_token" => refresh_token,
-         "expires_in" => expires_in
-       }} ->
-        conn
-        |> put_session(:access_token, access_token)
-        |> put_session(:refresh_token, refresh_token)
-        |> put_session(:expires_at, Timex.shift(Timex.now(), seconds: expires_in))
-        |> redirect(to: "/beats")
+    with {:ok, oauth_response} <-
+           Beats.SpotifyApi.request_oauth_token(code, "http://53c9e92c.ngrok.io/beats/callback"),
+         {:ok, me_response} <- Beats.SpotifyApi.me(oauth_response["access_token"]) do
+      conn
+      |> put_session(:access_token, oauth_response["access_token"])
+      |> put_session(:refresh_token, oauth_response["refresh_token"])
+      |> put_session(:spotify_name, me_response["display_name"] || me_response["id"])
+      |> put_session(:expires_at, Timex.shift(Timex.now(), seconds: oauth_response["expires_in"]))
+      |> redirect(to: "/beats")
     end
   end
 

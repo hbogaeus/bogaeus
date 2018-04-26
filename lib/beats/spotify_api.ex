@@ -108,6 +108,32 @@ defmodule Beats.SpotifyApi do
     request(:get, url, headers)
   end
 
+  def me(access_token) do
+    url = "https://api.spotify.com/v1/me"
+
+    headers = %{
+      "Authorization" => "Bearer #{access_token}"
+    }
+
+    request(:get, url, headers)
+  end
+
+  def playlist_songs(access_token, user_id, playlist_id) do
+    query_string = %{
+      "fields" => "total,limit,offset,items(track(name,id,external_urls,album(images),artists))"
+    }
+
+    url =
+      "https://api.spotify.com/v1/users/#{user_id}/playlists/#{playlist_id}/tracks?" <>
+        Plug.Conn.Query.encode(query_string)
+
+    headers = %{
+      "Authorization" => "Bearer #{access_token}"
+    }
+
+    request(:get, url, headers)
+  end
+
   def search(query) do
     {:ok, token} = get_client_credentials_token()
 
@@ -122,23 +148,7 @@ defmodule Beats.SpotifyApi do
 
     url = "https://api.spotify.com/v1/search?" <> URI.encode_query(query_string)
 
-    case HTTPoison.get(url, headers) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        result =
-          Poison.decode!(body)
-          |> get_in(["tracks", "items"])
-
-        {:ok, result}
-
-      {:ok, %HTTPoison.Response{status_code: 400}} ->
-        {:error, "Not found."}
-
-      {:ok, %HTTPoison.Response{status_code: 429}} ->
-        {:error, "Rate limit hit."}
-
-      {:error, %HTTPoison.Error{reason: reason}} ->
-        {:error, "#{inspect(reason)}"}
-    end
+    request(:get, url, headers)
   end
 
   def bpms(ids) do

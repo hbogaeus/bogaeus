@@ -4,8 +4,8 @@ defmodule BogaeusWeb.PageController do
   require Logger
 
   def index(conn, _params) do
-    token = get_session(conn, :access_token)
+    spotify_name = get_session(conn, :spotify_name)
 
-    render(conn, "index.html", access_token: token)
+    render(conn, "index.html", spotify_name: spotify_name)
   end
 end

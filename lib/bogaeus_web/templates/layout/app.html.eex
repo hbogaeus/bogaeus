@@ -14,7 +14,7 @@
 
 
     <script>
-      window.APP = <%= raw Poison.encode!(%{access_token: @access_token}) %>
+      window.APP = <%= raw Poison.encode!(%{spotify_name: @spotify_name}) %>
 
       window.onSpotifyWebPlaybackSDKReady = () => {
       const token = window.APP.access_token;

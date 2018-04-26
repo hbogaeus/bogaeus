@@ -8,11 +8,13 @@ defmodule Beats do
   """
   alias Beats.SpotifyApi
 
+  require Logger
+
   def search(query) do
     with {:ok, result} <- SpotifyApi.search(query),
-         song_ids <- Enum.map(result, & &1["id"]),
+         song_ids <- Enum.map(result["tracks"]["items"], & &1["id"]),
          {:ok, bpms} <- SpotifyApi.bpms(song_ids) do
-      zipped_results = Enum.zip(result, bpms)
+      zipped_results = Enum.zip(result["tracks"]["items"], bpms)
 
       Enum.map(zipped_results, fn {item, bpm} ->
         %{
@@ -45,5 +47,34 @@ defmodule Beats do
       offset: data["offset"],
       total: data["total"]
     }
+  end
+
+  def playlist_songs(access_token, user_id, playlist_id) do
+    with {:ok, data} <- SpotifyApi.playlist_songs(access_token, user_id, playlist_id),
+         song_ids <- Enum.map(data["items"], fn item -> item["track"]["id"] end),
+         {:ok, bpms} <- SpotifyApi.bpms(song_ids) do
+      items =
+        data
+        |> Map.get("items")
+        |> Enum.map(&Map.get(&1, "track"))
+        |> Enum.zip(bpms)
+        |> Enum.map(fn {song, bpm} ->
+          %{
+            id: song["id"],
+            title: song["name"],
+            images: song["album"]["images"],
+            artists: song["artists"],
+            href: song["external_urls"]["spotify"],
+            bpm: bpm
+          }
+        end)
+
+      %{
+        items: items,
+        limit: data["limit"],
+        offset: data["offset"],
+        total: data["total"]
+      }
+    end
   end
 end
