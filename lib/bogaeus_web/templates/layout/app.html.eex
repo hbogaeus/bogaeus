@@ -14,7 +14,7 @@
 
 
     <script>
-      window.APP = <%= raw Poison.encode!(%{spotify_name: @spotify_name}) %>
+      window.APP = <%= raw Poison.encode!(%{spotify_name: @spotify_name, access_token: @access_token}) %>
 
       window.onSpotifyWebPlaybackSDKReady = () => {
       const token = window.APP.access_token;
@@ -30,7 +30,13 @@
       player.addListener('playback_error', ({ message }) => { console.error(message); });
 
       // Playback status updates
-      player.addListener('player_state_changed', state => { console.log(state); });
+      player.addListener('player_state_changed', ({
+        position,
+        duration,
+        track_window: { current_track }
+      }) => {
+        console.log('Currently Playing', current_track);
+      });
 
       // Ready
       player.addListener('ready', ({ device_id }) => {

@@ -2,7 +2,7 @@
   height: 100%;
   padding: 10px;
   display: grid;
-  grid-template-columns: auto 250px 300px 250px auto;
+  grid-template-columns: auto 200px 300px 200px auto;
   grid-template-rows: 100px 2.5rem 2rem auto;
 }
 
@@ -12,11 +12,18 @@
   grid-row: 1 /2;
 }
 
+.navlinks {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+  display: flex;
+  justify-content: space-around;
+}
+
 .search {
   display: flex;
   position: relative;
   grid-column: 3 / 4;
-  grid-row: 2 / 3;
+  grid-row: 3 / 4;
 }
 
 .spotifyLogin {
@@ -86,6 +93,12 @@
 .cardInfo {
   font-size: 1rem;
   margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardTitle {
+  font-size: 1.3rem;
 }
 
 .playlistImage {

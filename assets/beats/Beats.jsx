@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import Card from "./Card.jsx";
-import Playlist from "./Playlist.jsx";
+import { Route, NavLink, Switch } from "react-router-dom";
+import Playlists from "./Playlists.jsx";
+import Search from "./Search.jsx";
 import withThemeChange from "../common/withThemeChange";
 import style from "./style.css";
 
@@ -107,7 +108,9 @@ class Beats extends Component {
     this.playlist(playlistId, userId)
       .then(response => response.json())
       .then(json =>
-        console.log(json)
+        this.setState({
+          selectedPlaylist: json.items
+        })
       );
   }
 
@@ -117,34 +120,31 @@ class Beats extends Component {
     return (
       <div className={style.main}>
         <h1 className={style.title}>Beats</h1>
-        <div className={`${style.search} ${isLoading && style.loading}`}>
-          <input
-            onChange={this.handleInput}
-            onKeyUp={this.handleEnterClick}
-            className={style.searchInput}
-            value={searchText}
-            type="text"
-            placeholder="Search for a title, artist, album..."
+
+        <div className={style.navlinks}>
+          <NavLink to="/beats">Search</NavLink>
+          <NavLink to="/beats/playlists">Playlists</NavLink>
+        </div>
+
+        <Route exact path="/beats" render={() => (
+          <Search
+            handleInput={this.handleInput}
+            handleEnterClick={this.handleEnterClick}
+            searchText={searchText}
+            isLoading={isLoading}
+            isValid={isValid}
+            items={items}
           />
+        )} />
 
-        </div>
-        {!window.APP.spotify_name ?
-          <span>{window.APP.spotify_name}</span>
-          : <a className={style.spotifyLogin} href="/beats/authorize">Login to Spotify</a>
-        }
-        <a onClick={this.handlePlaylistsClick}>Playlists</a>
-        <div>
-          {
-            playlists.map(playlist => <Playlist key={playlist.id} handlePlaylistClick={this.handlePlaylistClick} {...playlist} />)
-          }
-        </div>
-
-
-        <div className={style.results}>
-          {!isLoading &&
-            isValid &&
-            items.map(item => <Card key={item.id} {...item} />)}
-        </div>
+        <Route path="/beats/playlists" render={() => (
+          <Playlists
+            handlePlaylistsClick={this.handlePlaylistsClick}
+            handlePlaylistClick={this.handlePlaylistClick}
+            playlists={playlists}
+            selectedPlaylist={selectedPlaylist}
+          />
+        )} />
       </div>
     );
   }

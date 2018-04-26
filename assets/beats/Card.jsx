@@ -9,7 +9,10 @@ class Card extends PureComponent {
       <div className={style.card}>
         <img className={style.cardImage} src={image_url} />
         <span className={style.cardBPM}>{Math.round(bpm)}</span>
-        <span className={style.cardInfo}>{title} - {artist}</span>
+        <div className={style.cardInfo}>
+          <span className={style.cardTitle}>{title}</span>
+          <span>{artist}</span>
+        </div>
       </div>
     )
   }

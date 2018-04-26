@@ -5,7 +5,8 @@ defmodule BogaeusWeb.PageController do
 
   def index(conn, _params) do
     spotify_name = get_session(conn, :spotify_name)
+    token = get_session(conn, :access_token)
 
-    render(conn, "index.html", spotify_name: spotify_name)
+    render(conn, "index.html", spotify_name: spotify_name, access_token: token)
   end
 end
