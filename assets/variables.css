@@ -1,0 +1,10 @@
+:root {
+  /* Colors */
+  --color-gray: rgba(227, 227, 227, 1);
+  --color-orange: rgba(235, 117, 51, 1);
+  --color-white: rgba(255, 255, 255, 1);
+  --color-offwhite: rgba(248, 248, 248, 1);
+
+  /* Box-Shadow */
+  --box-shadow: 0 3px 6px 0 var(--color-gray);
+}
