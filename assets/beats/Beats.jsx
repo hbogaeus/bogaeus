@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Route, NavLink, Switch } from "react-router-dom";
 import Playlists from "./Playlists.jsx";
 import Search from "./Search.jsx";
-import withThemeChange from "../common/withThemeChange";
 import style from "./style.css";
 
 class Beats extends Component {
@@ -66,7 +65,7 @@ class Beats extends Component {
         Accept: "application/json",
         "Content-Type": "application/json"
       }),
-      credentials: 'include',
+      credentials: "include",
       body: JSON.stringify({ query: query })
     });
   }
@@ -78,7 +77,7 @@ class Beats extends Component {
         Accept: "application/json",
         "Content-Type": "application/json"
       }),
-      credentials: 'include'
+      credentials: "include"
     });
   }
 
@@ -89,7 +88,7 @@ class Beats extends Component {
         Accept: "application/json",
         "Content-Type": "application/json"
       }),
-      credentials: 'include',
+      credentials: "include",
       body: JSON.stringify({ playlistId: playlistId, userId: userId })
     });
   }
@@ -115,7 +114,14 @@ class Beats extends Component {
   }
 
   render() {
-    const { searchText, items, playlists, selectedPlaylist, isValid, isLoading } = this.state;
+    const {
+      searchText,
+      items,
+      playlists,
+      selectedPlaylist,
+      isValid,
+      isLoading
+    } = this.state;
 
     return (
       <div className={style.main}>
@@ -126,28 +132,35 @@ class Beats extends Component {
           <NavLink to="/beats/playlists">Playlists</NavLink>
         </div>
 
-        <Route exact path="/beats" render={() => (
-          <Search
-            handleInput={this.handleInput}
-            handleEnterClick={this.handleEnterClick}
-            searchText={searchText}
-            isLoading={isLoading}
-            isValid={isValid}
-            items={items}
-          />
-        )} />
+        <Route
+          exact
+          path="/beats"
+          render={() => (
+            <Search
+              handleInput={this.handleInput}
+              handleEnterClick={this.handleEnterClick}
+              searchText={searchText}
+              isLoading={isLoading}
+              isValid={isValid}
+              items={items}
+            />
+          )}
+        />
 
-        <Route path="/beats/playlists" render={() => (
-          <Playlists
-            handlePlaylistsClick={this.handlePlaylistsClick}
-            handlePlaylistClick={this.handlePlaylistClick}
-            playlists={playlists}
-            selectedPlaylist={selectedPlaylist}
-          />
-        )} />
+        <Route
+          path="/beats/playlists"
+          render={() => (
+            <Playlists
+              handlePlaylistsClick={this.handlePlaylistsClick}
+              handlePlaylistClick={this.handlePlaylistClick}
+              playlists={playlists}
+              selectedPlaylist={selectedPlaylist}
+            />
+          )}
+        />
       </div>
     );
   }
 }
 
-export default withThemeChange(Beats, "beats");
+export default Beats;
