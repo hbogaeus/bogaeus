@@ -25,7 +25,6 @@ defmodule BogaeusWeb.Router do
   end
 
   scope "/", BogaeusWeb do
-    # Use the default browser stack
     pipe_through :browser
 
     get "/beats/authorize", BeatsController, :authorize

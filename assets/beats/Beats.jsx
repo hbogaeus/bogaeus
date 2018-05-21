@@ -13,7 +13,8 @@ class Beats extends Component {
       isValid: false,
       items: [],
       playlists: [],
-      selectedPlaylist: null
+      selectedPlaylist: null,
+      selectedPlaylistId: null
     };
 
     this.handleSearchClick = this.handleSearchClick.bind(this);
@@ -104,6 +105,10 @@ class Beats extends Component {
   }
 
   handlePlaylistClick(playlistId, userId) {
+    this.setState({
+      selectedPlaylistId: playlistId
+    });
+
     this.playlist(playlistId, userId)
       .then(response => response.json())
       .then(json =>
@@ -119,18 +124,19 @@ class Beats extends Component {
       items,
       playlists,
       selectedPlaylist,
+      selectedPlaylistId,
       isValid,
       isLoading
     } = this.state;
 
     return (
       <div className={style.main}>
-        <h1 className={style.title}>Beats</h1>
-
+        {/*
         <div className={style.navlinks}>
           <NavLink to="/beats">Search</NavLink>
           <NavLink to="/beats/playlists">Playlists</NavLink>
         </div>
+        */}
 
         <Route
           exact
@@ -155,6 +161,7 @@ class Beats extends Component {
               handlePlaylistClick={this.handlePlaylistClick}
               playlists={playlists}
               selectedPlaylist={selectedPlaylist}
+              selectedPlaylistId={selectedPlaylistId}
             />
           )}
         />

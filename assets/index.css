@@ -1,9 +1,12 @@
+@import "./variables.css";
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
+  background-color: var(--color-off-white);
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial,
     sans-serif;
@@ -11,5 +14,13 @@ body {
 
 ul {
   padding: 0;
+  margin: 0;
   list-style: none;
+}
+
+hr {
+  border: 0;
+  margin: 20px 0;
+  height: 1px;
+  background: var(--color-gray);
 }

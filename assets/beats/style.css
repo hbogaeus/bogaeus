@@ -1,9 +1,28 @@
+@import "../variables.css";
+
 .main {
-  height: 100%;
-  padding: 10px;
-  display: grid;
-  grid-template-columns: auto 200px 300px 200px auto;
-  grid-template-rows: 100px 2.5rem 2rem auto;
+  padding: 60px;
+}
+
+.playlists {
+  display: flex;
+}
+
+.panel {
+  background-color: #ffffff;
+  border-radius: 3px;
+  box-shadow: var(--box-shadow);
+}
+
+.sidebar {
+  padding: 20px;
+  width: 300px;
+  min-height: 200px;
+  position: relative;
+
+  &.extraPaddingTop {
+    padding-top: 50px;
+  }
 }
 
 .title {
@@ -26,6 +45,22 @@
   grid-row: 3 / 4;
 }
 
+.profileImage {
+  height: 70px;
+  width: 70px;
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
+  position: absolute;
+  left: calc(50% - 35px);
+  top: -35px;
+}
+
+.spotifyName {
+  display: block;
+  text-align: center;
+}
+
 .spotifyLogin {
   grid-column: 4 / 5;
   grid-row: 1 / 2;
@@ -41,11 +76,11 @@
 }
 
 .loading.search::after {
-  content: '';
+  content: "";
   position: absolute;
   right: 0;
   border: 3px solid rgba(0, 0, 0, 0.1);
-  border-left-color: cadetblue;
+  border-left-color: var(--color-accent);
   border-radius: 50%;
   width: 1rem;
   height: 1rem;
@@ -62,7 +97,7 @@
 }
 
 .searchInput:focus {
-  outline: auto 1px cadetblue;
+  outline: auto 1px var(--color-accent);
 }
 
 .results {
@@ -70,10 +105,20 @@
   grid-row: 4 / 5;
 }
 
-.card {
+.playlist {
   display: flex;
-  margin-bottom: 1rem;
+  margin-top: 0.5rem;
   align-items: center;
+  cursor: pointer;
+  padding-left: 0.5rem;
+
+  &:hover {
+    box-shadow: inset 2px 0 0 var(--color-accent);
+  }
+
+  &.selected {
+    box-shadow: inset 2px 0 0 var(--color-accent);
+  }
 }
 
 .cardImage {
@@ -99,10 +144,4 @@
 
 .cardTitle {
   font-size: 1.3rem;
-}
-
-.playlistImage {
-  background-size: cover;
-  height: 3rem;
-  width: 3rem;
 }

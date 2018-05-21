@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "classnames": "^2.2.5",
     "howler": "^2.0.9",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

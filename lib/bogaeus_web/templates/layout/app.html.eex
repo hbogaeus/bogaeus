@@ -14,8 +14,9 @@
 
 
     <script>
-      window.APP = <%= raw Poison.encode!(%{spotify_name: @spotify_name, access_token: @access_token}) %>
+      window.APP = <%= raw Poison.encode!(%{spotify_name: @spotify_name, access_token: @access_token, profile_image_url: @profile_image_url}) %>
 
+      /*
       window.onSpotifyWebPlaybackSDKReady = () => {
       const token = window.APP.access_token;
       const player = new Spotify.Player({
@@ -48,7 +49,9 @@
 
       window.SPOTIFY_PLAYER = player;
 
+
     };
+      */
 
     </script>
   </head>
