@@ -37,17 +37,21 @@ table {
 
 td,
 th {
-  padding: 0.25em;
+  padding: 0.25rem 0.5rem;
 }
 
 tr {
   border-bottom: 1px solid var(--color-gray);
-  background-color: #ffffff;
+  background-color: rgb(255, 255, 255);
   transition: all 80ms ease;
 }
 
+tr:last-child {
+  border-bottom: none;
+}
+
 tbody > tr:hover {
-  background-color: #fafafa;
+  background-color: rgb(248, 248, 248);
 }
 
 /* 

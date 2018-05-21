@@ -19,6 +19,7 @@
   width: 300px;
   min-height: 200px;
   position: relative;
+  display: table;
 
   &.extraPaddingTop {
     padding-top: 50px;
@@ -28,6 +29,7 @@
 .content {
   flex-grow: 1;
   margin-left: 30px;
+  display: table;
 }
 
 .contentHeader {
@@ -146,7 +148,7 @@
   }
 
   &.selected {
-    box-shadow: inset 2px 0 0 var(--color-accent);
+    color: var(--color-accent);
   }
 }
 
