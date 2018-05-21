@@ -23,8 +23,19 @@ const Header = () => (
           activeClassName={style.selected}
           key={2}
           to="/beats"
+          exact
         >
-          Beats
+          Search
+        </NavLink>
+      </li>
+      <li className={style.item}>
+        <NavLink
+          className={style.link}
+          activeClassName={style.selected}
+          key={3}
+          to="/beats/playlists"
+        >
+          Playlists
         </NavLink>
       </li>
     </ul>

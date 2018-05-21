@@ -134,13 +134,6 @@ class Beats extends Component {
 
     return (
       <div className={style.main}>
-        {/*
-        <div className={style.navlinks}>
-          <NavLink to="/beats">Search</NavLink>
-          <NavLink to="/beats/playlists">Playlists</NavLink>
-        </div>
-        */}
-
         <Route
           exact
           path="/beats"
