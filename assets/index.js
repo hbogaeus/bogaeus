@@ -9,22 +9,24 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Header from "./common/Header";
 
-/*
 import Beats from "./beats/Beats";
 import MusicForProgramming from "./musicforprogramming/MusicForProgramming";
-*/
 
+/*
 const Loading = () => <h1>Loading...</h1>;
 
 const Beats = Loadable({
   loader: () => import("./beats/Beats"),
-  loading: Loading
+  loading: Loading,
+  delay: 400
 });
 
 const MusicForProgramming = Loadable({
   loader: () => import("./musicforprogramming/MusicForProgramming"),
-  loading: Loading
+  loading: Loading,
+  delay: 400
 });
+*/
 
 const App = () => (
   <div>

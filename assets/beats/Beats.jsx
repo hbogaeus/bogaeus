@@ -13,8 +13,8 @@ class Beats extends Component {
       isValid: false,
       items: [],
       playlists: [],
-      selectedPlaylist: null,
-      selectedPlaylistId: null
+      selectedPlaylistItems: null,
+      selectedPlaylist: null
     };
 
     this.handleSearchClick = this.handleSearchClick.bind(this);
@@ -104,16 +104,19 @@ class Beats extends Component {
       );
   }
 
-  handlePlaylistClick(playlistId, userId) {
+  handlePlaylistClick(playlist) {
+    const playlistId = playlist.id;
+    const userId = playlist.owner.id;
+
     this.setState({
-      selectedPlaylistId: playlistId
+      selectedPlaylist: playlist
     });
 
     this.playlist(playlistId, userId)
       .then(response => response.json())
       .then(json =>
         this.setState({
-          selectedPlaylist: json.items
+          selectedPlaylistItems: json.items
         })
       );
   }
@@ -123,8 +126,8 @@ class Beats extends Component {
       searchText,
       items,
       playlists,
+      selectedPlaylistItems,
       selectedPlaylist,
-      selectedPlaylistId,
       isValid,
       isLoading
     } = this.state;
@@ -160,8 +163,8 @@ class Beats extends Component {
               handlePlaylistsClick={this.handlePlaylistsClick}
               handlePlaylistClick={this.handlePlaylistClick}
               playlists={playlists}
+              selectedPlaylistItems={selectedPlaylistItems}
               selectedPlaylist={selectedPlaylist}
-              selectedPlaylistId={selectedPlaylistId}
             />
           )}
         />

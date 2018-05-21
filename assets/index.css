@@ -24,3 +24,34 @@ hr {
   height: 1px;
   background: var(--color-gray);
 }
+
+h1,
+h2 {
+  font-family: "Quicksand", sans-serif;
+}
+
+table {
+  text-align: left;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  padding: 0.25em;
+}
+
+tr {
+  border-bottom: 1px solid var(--color-gray);
+  background-color: #ffffff;
+  transition: all 80ms ease;
+}
+
+tbody > tr:hover {
+  background-color: #fafafa;
+}
+
+/* 
+tr:nth-child(even) {
+  background-color: #f9f8f8;
+}
+*/

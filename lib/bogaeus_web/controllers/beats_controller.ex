@@ -66,7 +66,7 @@ defmodule BogaeusWeb.BeatsController do
       |> put_session(:spotify_name, me_response["display_name"] || me_response["id"])
       |> put_session(:profile_image_url, me_response["images"] |> hd() |> Map.get("url"))
       |> put_session(:expires_at, Timex.shift(Timex.now(), seconds: oauth_response["expires_in"]))
-      |> redirect(to: "/beats")
+      |> redirect(to: "/beats/playlists")
     end
   end
 

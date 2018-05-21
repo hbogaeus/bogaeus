@@ -1,11 +1,11 @@
 import React, { PureComponent } from "react";
 import classNames from "classnames";
-import Playlist from "./Playlist.jsx";
+import Content from "./Content.jsx";
 import style from "./style.css";
 
 class Playlists extends PureComponent {
   componentDidMount() {
-    this.props.handlePlaylistsClick();
+    if (window.APP.spotify_name) this.props.handlePlaylistsClick();
   }
 
   render() {
@@ -13,8 +13,8 @@ class Playlists extends PureComponent {
       handlePlaylistsClick,
       handlePlaylistClick,
       playlists,
-      selectedPlaylist,
-      selectedPlaylistId
+      selectedPlaylistItems,
+      selectedPlaylist
     } = this.props;
 
     const { spotify_name, profile_image_url } = window.APP;
@@ -48,23 +48,26 @@ class Playlists extends PureComponent {
           {loggedIn && (
             <ul>
               {playlists.map(playlist => (
-                <Playlist
+                <li
                   key={playlist.id}
-                  handlePlaylistClick={handlePlaylistClick}
-                  selected={playlist.id === selectedPlaylistId}
-                  {...playlist}
-                />
+                  onClick={() => handlePlaylistClick(playlist)}
+                  className={classNames(style.playlist, {
+                    [style.selected]:
+                      selectedPlaylist && playlist.id === selectedPlaylist.id
+                  })}
+                >
+                  <span>{playlist.name}</span>
+                </li>
               ))}
             </ul>
           )}
         </div>
-
-        {selectedPlaylist &&
-          selectedPlaylist.map(track => (
-            <div key={track.id}>
-              {track.title} - {track.bpm}
-            </div>
-          ))}
+        {selectedPlaylist && (
+          <Content
+            selectedPlaylist={selectedPlaylist}
+            selectedPlaylistItems={selectedPlaylistItems}
+          />
+        )}
       </div>
     );
   }

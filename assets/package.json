@@ -7,6 +7,7 @@
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
     "howler": "^2.0.9",
+    "ramda": "^0.25.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-loadable": "^5.3.1",
