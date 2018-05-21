@@ -1,9 +1,10 @@
 :root {
-  --color-accent: rgba(244, 81, 30, 1);
+  --color-accent: rgb(244, 81, 30);
 
   /* Colors */
-  --color-gray: rgba(227, 227, 227, 1);
+  --color-gray: rgb(227, 227, 227);
   --color-off-white: rgb(248, 248, 248);
+  --color-spotify-green: rgb(30, 215, 96);
 
   /* Box-Shadow */
   --box-shadow: 0 3px 6px 0 var(--color-gray);

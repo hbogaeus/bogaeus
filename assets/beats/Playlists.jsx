@@ -39,7 +39,8 @@ class Playlists extends PureComponent {
             <span className={style.spotifyName}>{spotify_name}</span>
           ) : (
             <a className={style.spotifyLogin} href="/beats/authorize">
-              Login to Spotify
+              <img className={style.spotifyLogo} src="/images/spotify.svg" />
+              Login
             </a>
           )}
 
