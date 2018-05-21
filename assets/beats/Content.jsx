@@ -6,7 +6,6 @@ import style from "./style.css";
 class Content extends PureComponent {
   render() {
     const { selectedPlaylist, selectedPlaylistItems } = this.props;
-    console.log(selectedPlaylist);
     return (
       <div className={classNames(style.panel, style.content)}>
         <div className={style.contentHeader}>
