@@ -22,8 +22,7 @@ defmodule Beats do
           bpm: bpm,
           href: get_in(item, ["external_urls", "spotify"]),
           title: item["name"],
-          artist:
-            get_in(item, ["artists", fn :get, data, _next -> Map.get(hd(data), "name") end]),
+          artists: item["artists"],
           image_url:
             get_in(item, [
               "album",
