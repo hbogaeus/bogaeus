@@ -38,14 +38,21 @@ defmodule Beats do
   end
 
   def playlists(access_token) do
-    {:ok, data} = SpotifyApi.get_playlists(access_token)
+    {:ok, %{"items" => items, "total" => total, "limit" => limit, "offset" => offset}} =
+      SpotifyApi.get_playlists(access_token)
+
+    items = get_playlist_batch(access_token, offset + limit, total, items)
 
     %{
-      items: data["items"],
-      limit: data["limit"],
-      offset: data["offset"],
-      total: data["total"]
+      items: items
     }
+  end
+
+  def get_playlist_batch(_access_token, offset, total, acc) when offset > total, do: acc
+
+  def get_playlist_batch(access_token, offset, total, acc) do
+    {:ok, %{"items" => items, "limit" => limit}} = SpotifyApi.get_playlists(access_token, offset)
+    get_playlist_batch(access_token, offset + limit, total, acc ++ items)
   end
 
   def playlist_songs(access_token, user_id, playlist_id) do
