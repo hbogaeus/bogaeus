@@ -9,7 +9,7 @@
 
     <title>Bogaeus</title>
     <link href="https://fonts.googleapis.com/css?family=Quicksand|Source+Sans+Pro" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="<%= static_path(@conn, "/dist/index.css") %>">-->
+    <!-- <link rel="stylesheet" href="<%= static_path(@conn, "/dist/index.css") %>"> -->
     <!-- <script src="https://sdk.scdn.co/spotify-player.js"></script> -->
 
 
@@ -58,7 +58,10 @@
 
   <body>
     <div id="root"></div>
-    <!-- <script src="<%= static_path(@conn, "/dist/bundle.js") %>"></script>-->
-    <script  src='http://localhost:3000/bundle.js'></script>
+    <%= if Mix.env() == :dev do %>
+      <script  src='http://localhost:3000/bundle.js'></script>
+    <% else %>
+      <script src="<%= static_path(@conn, "/dist/bundle.js") %>"></script>
+    <% end %>
   </body>
 </html>

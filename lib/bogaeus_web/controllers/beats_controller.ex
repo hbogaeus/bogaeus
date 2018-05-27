@@ -44,11 +44,9 @@ defmodule BogaeusWeb.BeatsController do
       response_type: "code",
       scope:
         "playlist-read-collaborative playlist-read-private streaming user-read-birthdate user-read-email user-read-private",
-      redirect_uri: "http://331e3aa4.ngrok.io/beats/callback",
+      redirect_uri: Confex.fetch_env!(:bogaeus, :redirect_uri),
       state: oauth_state
     }
-
-    # beats_url(BogaeusWeb.Endpoint, :callback)
 
     redirect(
       conn,
@@ -58,13 +56,13 @@ defmodule BogaeusWeb.BeatsController do
 
   def callback(conn, %{"code" => code, "state" => _state}) do
     with {:ok, oauth_response} <-
-           Beats.SpotifyApi.request_oauth_token(code, "http://331e3aa4.ngrok.io/beats/callback"),
+           Beats.SpotifyApi.request_oauth_token(code, Confex.fetch_env!(:bogaeus, :redirect_uri)),
          {:ok, me_response} <- Beats.SpotifyApi.me(oauth_response["access_token"]) do
       conn
       |> put_session(:access_token, oauth_response["access_token"])
       |> put_session(:refresh_token, oauth_response["refresh_token"])
       |> put_session(:spotify_name, me_response["display_name"] || me_response["id"])
-      |> put_session(:profile_image_url, me_response["images"] |> hd() |> Map.get("url"))
+      |> put_session(:profile_image_url, me_response["images"] |> List.first() |> Map.get("url"))
       |> put_session(:expires_at, Timex.shift(Timex.now(), seconds: oauth_response["expires_in"]))
       |> redirect(to: "/beats/playlists")
     end
