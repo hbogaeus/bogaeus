@@ -19,7 +19,10 @@ config :logger, :console,
 
 config :bogaeus,
   spotify_client_secret: {:system, "SPOTIFY_CLIENT_SECRET"},
-  spotify_client_id: {:system, "SPOTIFY_CLIENT_ID"}
+  spotify_client_id: {:system, "SPOTIFY_CLIENT_ID"},
+  redirect_uri: {:system, "REDIRECT_URI"}
+
+config :tzdata, :autoupdate, :disabled
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

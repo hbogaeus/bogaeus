@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "deploy": "webpack --config webpack.prod.config.js"
+  },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
