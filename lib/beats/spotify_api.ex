@@ -1,5 +1,6 @@
 defmodule Beats.SpotifyApi do
   use GenServer
+  import Plug.Conn.Query
   require Logger
 
   def init(_args) do
@@ -22,7 +23,7 @@ defmodule Beats.SpotifyApi do
   end
 
   def handle_info(:clear, _state) do
-    Logger.debug("Cleared state.")
+    Logger.debug("Cleared token.")
     {:noreply, nil}
   end
 
@@ -98,8 +99,13 @@ defmodule Beats.SpotifyApi do
     request(:post, url, headers, body)
   end
 
-  def get_playlists(access_token) do
-    url = "https://api.spotify.com/v1/me/playlists"
+  def get_playlists(access_token, offset \\ 0) do
+    query_params = %{
+      "limit" => 50,
+      "offset" => offset
+    }
+
+    url = "https://api.spotify.com/v1/me/playlists/?" <> encode(query_params)
 
     headers = %{
       "Authorization" => "Bearer #{access_token}"
@@ -125,7 +131,7 @@ defmodule Beats.SpotifyApi do
 
     url =
       "https://api.spotify.com/v1/users/#{user_id}/playlists/#{playlist_id}/tracks?" <>
-        Plug.Conn.Query.encode(query_string)
+        encode(query_string)
 
     headers = %{
       "Authorization" => "Bearer #{access_token}"
@@ -146,7 +152,7 @@ defmodule Beats.SpotifyApi do
       "type" => "track"
     }
 
-    url = "https://api.spotify.com/v1/search?" <> URI.encode_query(query_string)
+    url = "https://api.spotify.com/v1/search?" <> encode(query_string)
 
     request(:get, url, headers)
   end
