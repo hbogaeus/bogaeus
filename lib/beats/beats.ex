@@ -8,8 +8,6 @@ defmodule Beats do
   """
   alias Beats.SpotifyApi
 
-  require Logger
-
   def search(query) do
     with {:ok, result} <- SpotifyApi.search(query),
          song_ids <- Enum.map(result["tracks"]["items"], & &1["id"]),
@@ -41,10 +39,8 @@ defmodule Beats do
     {:ok, %{"items" => items, "total" => total, "limit" => limit, "offset" => offset}} =
       SpotifyApi.get_playlists(access_token)
 
-    items = get_playlist_batch(access_token, offset + limit, total, items)
-
     %{
-      items: items
+      items: get_playlist_batch(access_token, offset + limit, total, items)
     }
   end
 

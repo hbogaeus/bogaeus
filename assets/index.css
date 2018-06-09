@@ -53,7 +53,7 @@ tr {
   transition: all 80ms ease;
 }
 
-tr:last-child {
+tbody > tr:last-child {
   border-bottom: none;
 }
 
